@@ -11,6 +11,7 @@ import DeleteTask from '../UseCase/DeleteTask/DeleteTask';
 import GetAllTasksUseCase from '../UseCase/GetAllTasks/GetAllTasksUseCase';
 import SaveTaskDto from '../UseCase/SaveTask/SaveTaskDto';
 import UseCaseFactory from '../UseCase/UseCaseFactory';
+import SaveTaskUseCase from '../UseCase/SaveTask/SaveTaskUseCase';
 
 @Controller()
 export default class TaskController {
@@ -23,12 +24,15 @@ export default class TaskController {
 
   @Post('/tasks')
   async create(@Body() dto: SaveTaskDto) {
-    // @todo YOU MUST FOLLOW THE SAME IMPLEMENTATION AS OTHER ENDPOINTS
+    // done
+    return (await this.useCaseFactory.create(SaveTaskUseCase)).handle(dto);
   }
 
   @Patch('/tasks/:id')
-  async update(@Body() dto: SaveTaskDto) {
-    // @todo YOU MUST FOLLOW THE SAME IMPLEMENTATION AS OTHER ENDPOINTS
+  async update(@Param('id') id: string, @Body() dto: SaveTaskDto) {
+    // done
+    dto.id = Number(id);
+    return (await this.useCaseFactory.create(SaveTaskUseCase)).handle(dto);
   }
 
   @Delete('/tasks/:id')
